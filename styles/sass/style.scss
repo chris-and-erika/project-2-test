@@ -1,0 +1,377 @@
+@use "./partials/setup";
+@use "./partials/variables" as *;
+@use "./partials/mixins" as *;
+@use "./partials/reuseableCode";
+@use "./partials/contact";
+@use "./partials/modal";
+@use "./partials/cart";
+@use "./partials/mediaQueries";
+
+//nagivation section//
+header nav {
+    height: 10vh;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    @include colors($white, 0, 0 0 8px rgba(0, 0, 0, 0.25));
+    .wrapper ul {
+        text-transform: uppercase;
+        font-weight: 600;      
+        li .svg {
+                all: revert;
+                width: 1.75rem;
+            }
+        }
+        .navHover {
+            margin-right: 2rem;
+            position: relative;
+            a:hover,
+            a:focus {
+                color: $plantGreen;
+            }
+            a.active {
+                color: $lightgreen;
+                font-weight: 700;
+            }
+        }
+        .navHover::after {
+            content: '';
+            height: 5px;
+            width: 100%;
+            background-color: $lightgreen;
+            position: absolute;
+            left: 0;
+            bottom: -1rem; 
+            opacity: 0;
+            transition: all 0.25s;
+            pointer-events: none;
+        }
+        .navHover:hover::after {
+            opacity: 1;
+        }
+    }
+
+    .hamburger,
+    .mobileNav {
+        display: none;
+    }
+
+    .cart {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .cartItemNumber {
+        position: absolute;
+        top: 1rem;
+        right: -0.3rem;
+        background-color: $lightgreen;
+        color: $white;
+        font-size: 0.8rem;
+        font-weight: 400;
+        text-align: center;
+        padding-top: 0.1rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 0.6rem;
+    }
+
+//wishlist
+
+.wishListIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.15rem;
+    margin-right: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    border: 1px black solid;
+    cursor: pointer;
+}
+
+//header section//
+header {
+    height: 100vh;
+    overflow: hidden;
+    .hero {
+        margin-top: 10vh;
+        height: 90vh;
+        .textContainer {
+            width: 50%;
+            padding-right: 2rem;
+            h1 {
+                @include fontStyling($secondaryFont, 2.5rem, 900);
+                @include textStyling(0.1rem, 3.5rem, capitalize, none);
+            }
+            p {
+                padding: 2rem 0;
+            }
+        }
+        .imageContainer {
+            width: 50%;
+            img {
+                transition: all 1s ease;
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+}
+// reference for parallax: https://www.w3schools.com/howto/howto_css_parallax.asp
+.parallax {
+    background-image: url(../assets/header/background.png);
+    height: 100%;
+    background-attachment: fixed;
+    @include bgImgStyling(center, cover, no-repeat);
+}
+
+//about section//
+.aboutText {
+    width: 45%;
+    h2 {
+    @include fontStyling(0, 1.25rem, 0);
+    @include textStyling( 0, 0, capitalize, none);
+    padding-bottom: 0.5rem;
+}
+    h3 {
+        @include fontStyling (0, 2rem, 0);
+        @include textStyling(0, 2.5rem, capitalize, none);
+        padding: 1rem 0;
+    }
+    p {
+        padding: 0.5rem 0;
+    }
+    button {
+        margin-top: 1rem;
+    }
+}
+.factContainer {
+    width: 45%;
+    align-self: flex-start;
+    .aboutFact {
+        @include fontStyling($secondaryFont, 1.5rem, 500);
+        @include textStyling(0.075rem, 2rem, capitalize, none);
+        @include colors($lightgreen, $white, none);
+        @include boxModel(auto, auto, 5rem 2rem, none, 2rem, none);
+    }
+}
+
+//shop section//
+.productGallery {
+    flex-wrap: wrap;
+    li {
+        max-width: 24%;
+        margin-bottom: 3rem;
+        border: 1.5px solid $lightgrey;
+        border-radius: 10px;
+        position: relative;
+        transition: 0.4s ease-in-out;
+        &:hover {
+            border: 2.5px $lightgreen solid;
+        }
+        .imageContainer {
+            width: 100%;
+            font-size: 0;
+            img {
+                border-radius: 10px 10px 0 0;
+            }
+        }
+        .plus {
+            all: revert;
+            width: 2rem;
+            height: 2rem;
+            padding: 0.4rem;
+            border: none;
+            background-color: $lightgreen;
+            border-radius: 1.3rem;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.25);
+            position: absolute;
+            bottom: 10.25rem;
+            right: 0.5rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            &:hover {
+                background-color: $black;
+            } 
+            &:active {
+                background-color: grey;
+            }
+            img {
+                filter: brightness(0) invert(1);
+                padding-right: 0.15rem;
+                padding-top: 0.1rem;
+            }
+        }
+        .textContainer {
+            @include boxModel(100%, 140px, none, none, none, none);
+            background-color: $white;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            p {
+                padding-top: 0.75rem;
+                height: 70px;
+            }
+            .price {
+                padding: 1.25rem 0;
+                align-self: flex-end;
+                span {
+                    text-decoration: line-through;
+                }
+            }
+        }
+    }
+}
+
+.infoContainer {
+    background-color: $white;
+    padding: 1rem;
+    border-radius: 0 0 10px 10px;
+}
+
+.shopBtn {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+//gallery section//
+.gallery {
+    background-image: url(../assets/grass.jpg);
+    @include bgImgStyling(bottom, contain, no-repeat);
+    .wrapper {
+        text-align: center;
+        .mainGallery {
+            padding: 2rem 0 4rem 0;
+            .row2 {
+                li {
+                    width: calc(50% - 5px);
+                    margin: 5px;
+                    overflow: hidden;
+                }
+            }
+            .row3 {
+                li {
+                    width: calc((100% / 3) - 5px);
+                    margin: 0 5px;
+                    overflow: hidden;
+                }
+            }
+            img {
+                transition: all 1s ease;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}
+
+//blog section//
+.blog {
+    @include colors($plantGreen, $white, none);
+    .blogPost {
+        @include colors($white, $black, 0 5px 8px rgba(0, 0, 0, 0.3));
+        @include boxModel(32%, auto, 1rem, none, 6px, none);
+        .imageContainer {
+            width: 100%;
+            img {
+                border-radius: 4px;
+            }
+        }
+        .textContainer {
+            @include boxModel(100%, auto, 1rem 0, none, none, none);
+            p {
+                padding: 1rem 0;
+            }
+        }
+    }
+}
+
+//footer section//
+.footerCol {
+    @include boxModel(25%, 42vh, none, none, none, none);
+    h3 {
+        padding-bottom: 2rem;
+        @include textStyling(0.075rem, 1.5rem, 0, none);
+    }
+}
+.first {
+    padding-right: 2rem;
+    }
+    .imageContainer {
+        width: 60%;
+    } 
+    .division {
+        justify-content: space-evenly;
+        nav ul li {
+            margin-right: 1rem;
+        }
+    }
+.second {
+    padding-left: 1rem;
+    nav ul {
+        align-items: flex-start;
+        height: 100%;
+        a {
+            transition: all 0.25s;
+            &:hover {
+                color: $lightgreen;
+                font-weight: 600;
+            }
+        }
+    }
+}
+.third .imageContainer {
+    width: calc(100% / 3);
+    }
+.third .textContainer {
+        @include boxModel(75%, auto, 0 0 0 1rem, none, none, none);
+        p {
+            padding: 0.5rem 0;
+        }
+        .item {
+            @include fontStyling($secondaryFont, 0.8rem, 600);
+            padding: 0;
+        }
+    }
+.fourth {
+    padding-left: 1.7rem;
+    form {
+        padding-top: 0.5rem;
+        width: 100%;
+        input[type=text] {
+            @include boxModel(100%, auto, 1rem, $borderInput, 4px, none);
+            outline: none;
+            &:focus {
+                border: 2px solid $lightgreen;
+            }
+            &::placeholder {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+.footerImage {
+    font-size: 0;
+}
+.copyright {
+    @include colors($plantGreen, $white, none);
+    font-size: 0.75rem;
+    text-align: center;
+    a {
+        color: $white;
+    }
+}
+
+
+    
+
+
+
+
+
+
+
+
